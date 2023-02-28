@@ -1,4 +1,4 @@
-{{TABLE NAME}} Model and Repository Classes Design Recipe
+Albums Model and Repository Classes Design Recipe
 Copy this recipe template to design and implement Model and Repository classes for a database table.
 
 1. Design and create the Table
@@ -46,12 +46,12 @@ Usually, the Model class name will be the capitalised table name (single instead
 
 # Model class
 # (in lib/student.rb)
-class Student
+class Album
 end
 
 # Repository class
 # (in lib/student_repository.rb)
-class StudentRepository
+class AlbumRepository
 end
 4. Implement the Model class
 Define the attributes of your Model class. You can usually map the table columns to the attributes of the class, including primary and foreign keys.
@@ -62,10 +62,8 @@ Define the attributes of your Model class. You can usually map the table columns
 # Model class
 # (in lib/student.rb)
 
-class Student
-
-  # Replace the attributes by your own columns.
-  attr_accessor :id, :name, :cohort_name
+class Album
+  attr_accessor :id, :title, :release_year, :artist_id
 end
 
 # The keyword attr_accessor is a special Ruby feature
