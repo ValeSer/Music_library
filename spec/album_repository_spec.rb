@@ -14,7 +14,7 @@ RSpec.describe AlbumRepository do
 
   it 'returns two albums' do
     repo = AlbumRepository.new
-    albums = repo.all
+    albums = repo.all.sort_by(&:title)
 
     expect(albums.length).to eq(2)
     expect(albums.first.title).to eq('Bossanova')

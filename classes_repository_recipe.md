@@ -28,13 +28,16 @@ If seed data is provided (or you already created it), you can skip this step.
 -- so we can start with a fresh state.
 -- (RESTART IDENTITY resets the primary key)
 
-TRUNCATE TABLE students RESTART IDENTITY; -- replace with your own table name.
+-- TRUNCATE TABLE artists RESTART IDENTITY;
+-- TRUNCATE TABLE albums RESTART IDENTITY;
 
 -- Below this line there should only be `INSERT` statements.
 -- Replace these statements with your own seed data.
 
-INSERT INTO students (name, cohort_name) VALUES ('David', 'April 2022');
-INSERT INTO students (name, cohort_name) VALUES ('Anna', 'May 2022');
+INSERT INTO artists (name, genre) VALUES ('Pixies', 'Rock');
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Bossanova', '1999', '1');
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Surfer Rosa', '2001', '1');
+
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
 
 psql -h 127.0.0.1 your_database_name < seeds_{table_name}.sql
@@ -44,10 +47,17 @@ Usually, the Model class name will be the capitalised table name (single instead
 class Album
 end
 
+class Artist 
+end
+
 # Repository class
 # (in lib/student_repository.rb)
 class AlbumRepository
 end
+
+class ArtistRepository
+end
+
 4. Implement the Model class
 Define the attributes of your Model class. You can usually map the table columns to the attributes of the class, including primary and foreign keys.
 
@@ -61,6 +71,9 @@ class Album
   attr_accessor :id, :title, :release_year, :artist_id
 end
 
+class Artist
+  attr_accessor :id, :name, :genre
+end
 # The keyword attr_accessor is a special Ruby feature
 # which allows us to set and get attributes on an object,
 # here's an example:
@@ -83,6 +96,18 @@ class AlbumRepository
     # Returns an array of Album objects.
   end
 end
+
+class ArtistRepository
+
+  # Selecting all records
+  # No arguments
+  def all
+    # Executes the SQL query:
+    # SELECT id, name, genre FROM artists;
+
+    # Returns an array of Artists objects.
+  end
+end
 6. Write Test Examples
 Write Ruby code that defines the expected behaviour of the Repository class, following your design from the table written in step 5.
 
@@ -100,6 +125,26 @@ albums.lenght # => 2
 albums.first.title # => 'Bossanova'
 albums.first.release_year # => '1999'
 albums.first.artist_id # => '1
+
+
+# 2
+# Get all albums when there are no albums in the DB
+
+repo = AlbumRepository.new
+albums = repo.all # => []
+
+
+# 3
+# Get all artists
+
+repo = ArtistRepository.new
+artists = repo.all
+
+artists.lenght # => 1
+artists.first. # => 'Bossanova'
+albums.first.release_year # => '1999'
+albums.first.artist_id # => '1
+
 
 Encode this example as a test.
 
